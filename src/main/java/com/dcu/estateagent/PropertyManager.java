@@ -9,10 +9,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+//import org.json.parser.JSONParser;
+//import org.json.parser.ParseException;
 import java.util.*;
 import java.io.*;
 import java.time.LocalDate;
@@ -22,10 +22,9 @@ import java.time.format.DateTimeFormatter;
 public class PropertyManager {
 
   private ArrayList<Property> properties = new ArrayList<Property>();
-  JSONParser parser = new JSONParser();
-
+  /*JSONParser parser = new JSONParser();
   JSONArray a = (JSONArray) parser.parse(new FileReader("./properties.json"));
-  /*for (Object o : a) {
+  for (Object o : a) {
     JSONObject property = (JSONObject) o;
     properties.add(property);
   }*/
@@ -60,7 +59,7 @@ public class PropertyManager {
   @GET
 	@Path("/bid?id{id}&&min={min}&&max={max}")
   @Produces(MediaType.APPLICATION_JSON)
-	public StreamingOutput bidlProperty(@PathParam("id") int id, @PathParam("min") int min,@PathParam("max") int max){
+	public responce bidlProperty(@PathParam("id") int id, @PathParam("min") int min,@PathParam("max") int max){
 		if (properties.isEmpty()) {
       return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
 		}
