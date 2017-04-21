@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dcu.estateagent</groupId>
-    <artifactId>EstateAgent</artifactId>
+    <artifactId>estateagent</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>Estate Agent</name>
@@ -64,7 +64,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.dcu.EstateAgent.Main</mainClass>
+                    <mainClass>com.dcu.estateagent.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
