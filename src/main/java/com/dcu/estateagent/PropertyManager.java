@@ -2,6 +2,7 @@ package com.dcu.estateagent;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
@@ -47,7 +48,7 @@ public class PropertyManager {
 		return Response.status(200).entity(prop).build();
   }
 
-  @PUT
+  @POST
   @Path("/add")
   @Consumes(MediaType.APPLICATION_JSON)
   public Response consumeJSON(Property prop) {
@@ -56,7 +57,7 @@ public class PropertyManager {
     return Response.status(200).entity(output).build();
   }
 
-  @GET
+  /*@GET
 	@Path("/bid?id{id}&&min={min}&&max={max}")
   @Produces(MediaType.APPLICATION_JSON)
 	public responce bidlProperty(@PathParam("id") int id, @PathParam("min") int min,@PathParam("max") int max){
@@ -70,7 +71,7 @@ public class PropertyManager {
     if(price >= min && price <= max && (start.isBefore(today)||start.equals(today))&&(end.isAfter(today)|| end.equals(today))) {
       result.add(prop);
     }
-	}
+	}*/
 }
 
 class Property {
@@ -94,11 +95,11 @@ class Property {
 
   @Override
   public String toString(){
-    try {
+    //try {
       return new JSONObject().put("type", type).put("district", district).put("bedrooms", bedrooms).put("price", price).toString();
-    } catch (JSONException e) {
-      return null;
-    }
+    //} catch (JSONException e) {
+      //return null;
+    //}
   }
 
   public LocalDate getStart() {
