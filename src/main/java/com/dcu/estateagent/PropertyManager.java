@@ -45,7 +45,7 @@ public class PropertyManager {
       return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
     }
     final Property prop = properties.get(id);
-		return Response.status(200).entity(prop).build();
+    return Response.status(200).entity(prop).build();
   }
 
   @POST
@@ -58,12 +58,12 @@ public class PropertyManager {
   }
 
   @POST
-	@Path("/bid?id{id}&&bid={bid}")
+  @Path("/bid?id{id}&&bid={bid}")
   @Produces(MediaType.APPLICATION_JSON)
-	public Response bidProperty(@PathParam("id") int id, @PathParam("bid") int bid){
-		if (properties.isEmpty()) {
+  public Response bidProperty(@PathParam("id") int id, @PathParam("bid") int bid){
+    if (properties.isEmpty()) {
       return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
-		}
+    }
     Property prop = properties.get(id);
     int price = prop.getPrice();
     int prevBid = prop.getBid();
@@ -76,7 +76,7 @@ public class PropertyManager {
       return Response.status(200).entity(output).build();
     }
     return Response.status(Response.Status.NOT_FOUND).entity("Bid Failed").build();
-	}
+  }
 }
 
 class Property {
@@ -86,7 +86,7 @@ class Property {
   private int price;
   private int highestBid = 0;
   private LocalDate startDate;
-	private LocalDate endDate;
+  private LocalDate endDate;
 
   public Property(String type, int dist, int bed, int price) {
     this.type = type;
@@ -107,12 +107,12 @@ class Property {
   }
 
   public LocalDate getStart() {
-		return startDate;
-	}
+    return startDate;
+  }
 
-	public LocalDate getEnd() {
-		return endDate;
-	}
+  public LocalDate getEnd() {
+    return endDate;
+  }
 
   public String getType() {
     return type;
