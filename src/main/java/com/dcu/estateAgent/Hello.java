@@ -1,4 +1,4 @@
-package com.dcu.estate.agent;
+package com.dcu.estateAgent;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
