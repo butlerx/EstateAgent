@@ -8,6 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.util.*;
 
+@Path("/api")
 public class PropertyManager {
 
   private ArrayList<Property> properties = new ArrayList<Property>();
@@ -19,12 +20,10 @@ public class PropertyManager {
   properties.add(new Property(5, "apartment", 7, 1, 150000));*/
 
   @GET
-  @Path("/{param}")
-  public Response getMsg(@PathParam("param") String msg) {
+  @Path("/list")
+  public ArrayList<Property> getMsg() {
 
-    String output = "Jersey say : " + msg;
-
-    return Response.status(200).entity(output).build();
+    return properties;
 
   }
 }
