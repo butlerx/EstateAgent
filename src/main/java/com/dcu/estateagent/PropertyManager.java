@@ -69,9 +69,9 @@ public class PropertyManager {
     int prevBid = prop.getBid();
     LocalDate start = prop.getStart();
     LocalDate end = prop.getEnd();
-    if(price <= prevBid && price <= max && (start.isBefore(today)||start.equals(today))&&(end.isAfter(today)|| end.equals(today))) {
+    if(bid >= prevBid && price <= bid && (start.isBefore(today)||start.equals(today))&&(end.isAfter(today)|| end.equals(today))) {
       prop.setBid(bid);
-      properties.add(i, prop);
+      properties.add(id, prop);
       String output = prop.toString();
       return Response.status(200).entity(output).build();
     }
@@ -144,5 +144,13 @@ class Property {
 
   public void setPrice(int price) {
     this.price = price;
+  }
+
+  public void setBid(int bid) {
+    this.bid = bid;
+  }
+
+  public void getBid() {
+    return this.bid;
   }
 }
