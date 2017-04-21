@@ -58,19 +58,24 @@ public class PropertyManager {
   }
 
   @POST
-	@Path("/bid?id{id}&&min={min}&&max={max}")
+	@Path("/bid?id{id}&&bid={bid}")
   @Produces(MediaType.APPLICATION_JSON)
-	public Responce bidlProperty(@PathParam("id") int id, @PathParam("min") int min,@PathParam("max") int max){
+	public Response bidProperty(@PathParam("id") int id, @PathParam("bid") int bid){
 		if (properties.isEmpty()) {
       return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
 		}
     Property prop = properties.get(id);
     int price = prop.getPrice();
+    int prevBid = prop.getBid();
     LocalDate start = prop.getStart();
     LocalDate end = prop.getEnd();
-    if(price >= min && price <= max && (start.isBefore(today)||start.equals(today))&&(end.isAfter(today)|| end.equals(today))) {
-      result.add(prop);
+    if(price <= prevBid && price <= max && (start.isBefore(today)||start.equals(today))&&(end.isAfter(today)|| end.equals(today))) {
+      prop.setBid(bid);
+      properties.add(i, prop);
+      String output = prop.toString();
+      return Response.status(200).entity(output).build();
     }
+    return Response.status(Response.Status.NOT_FOUND).entity("Bid Failed").build();
 	}
 }
 
