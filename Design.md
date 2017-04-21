@@ -10,6 +10,7 @@
  mvn clean package
 ```
 Copy the outputted .war file into the webapps directory in your tomcat installation
+
 restart tomcat
 
 ## Structure
