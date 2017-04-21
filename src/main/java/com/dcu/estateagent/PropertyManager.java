@@ -11,17 +11,19 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import org.json.*;
 import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Path("/api")
 public class PropertyManager {
 
   private ArrayList<Property> properties = new ArrayList<Property>();
 
-  /*properties.add(new Property(1, "house", 3, 2, 375000));
-  properties.add(new Property(2, "house", 5, 3, 360000));
-  properties.add(new Property(3, "house", 3, 3, 500000));
-  properties.add(new Property(4, "apartment", 5, 2, 250000));
-  properties.add(new Property(5, "apartment", 7, 1, 150000));*/
+  JSONArray a = (JSONArray) parser.parse(new FileReader("./properties.json"));
+  /*for (Object o : a) {
+    JSONObject property = (JSONObject) o;
+    properties.add(property);
+  }*/
 
   @GET
   @Path("/list")
@@ -49,6 +51,22 @@ public class PropertyManager {
     properties.add(prop);
     return Response.status(200).entity(output).build();
   }
+
+  @GET
+	@Path("/bid?id{id}&&min={min}&&max={max}")
+  @Produces(MediaType.APPLICATION_JSON)
+	public StreamingOutput bidlProperty(@PathParam("id") int id, @PathParam("min") int min,@PathParam("max") int max){
+		if (properties.isEmpty()) {
+      return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
+		}
+    Property prop = properties.get(id);
+    int price = prop.getPrice();
+    LocalDate start = prop.getStart();
+    LocalDate end = prop.getEnd();
+    if(price >= min && price <= max && (start.isBefore(today)||start.equals(today))&&(end.isAfter(today)|| end.equals(today))) {
+      result.add(prop);
+    }
+	}
 }
 
 class Property {
@@ -56,12 +74,18 @@ class Property {
   private int district;
   private int bedrooms;
   private int price;
+  private int highestBid = 0;
+  private LocalDate startDate;
+	private LocalDate endDate;
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   public Property(String type, int dist, int bed, int price) {
     this.type = type;
     this.district = dist;
     this.bedrooms = bed;
     this.price = price;
+    this.startDate = LocalDate.now();
+    this.endDate = LocalDate.now().plusDays(5);
   }
 
   @Override
@@ -72,6 +96,14 @@ class Property {
       return null;
     }
   }
+
+  public LocalDate getStart() {
+		return startDate;
+	}
+
+	public LocalDate getEnd() {
+		return endDate,formatter;
+	}
 
   public String getType() {
     return type;
