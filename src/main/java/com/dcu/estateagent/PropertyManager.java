@@ -9,8 +9,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-import org.json.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import java.util.*;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -18,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 public class PropertyManager {
 
   private ArrayList<Property> properties = new ArrayList<Property>();
+  JSONParser parser = new JSONParser();
 
   JSONArray a = (JSONArray) parser.parse(new FileReader("./properties.json"));
   /*for (Object o : a) {
@@ -102,7 +107,7 @@ class Property {
 	}
 
 	public LocalDate getEnd() {
-		return endDate,formatter;
+		return endDate;
 	}
 
   public String getType() {
