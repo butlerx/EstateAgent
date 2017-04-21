@@ -1,11 +1,13 @@
 package com.dcu.estateagent;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import java.util.*;
 
 @Path("/api")
@@ -21,10 +23,29 @@ public class PropertyManager {
 
   @GET
   @Path("/list")
+  @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<Property> getMsg() {
-
     return properties;
+  }
 
+  @GET
+  @Path("/list/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getProperty(@PathParam("id") int id) {
+    final Property prop = properties.get(id);
+    if (prop == "null") {
+      return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
+    }
+    return Response.ok(prop);
+  }
+
+  @PUT
+  @Path("/add")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response consumeJSON(Property prop) {
+    String output = prop.toString();
+    properties.add(prop);
+    return Response.status(200).entity(output).build();
   }
 }
 
