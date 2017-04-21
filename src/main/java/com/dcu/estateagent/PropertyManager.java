@@ -50,22 +50,20 @@ public class PropertyManager {
 }
 
 class Property {
-  private int id;
   private String type;
   private int district;
   private int bedrooms;
   private int price;
 
-  public Property(int id, String type, int dist, int bed, int price) {
-    this.id = id;
+  public Property(String type, int dist, int bed, int price) {
     this.type = type;
     this.district = dist;
     this.bedrooms = bed;
     this.price = price;
   }
 
-  public int getID() {
-    return id;
+  public String toString() {
+    return "Type: " + type + ", District: " + district + ", No. Bedrooms: " + bedrooms + ", Price: " + price;
   }
 
   public String getType() {
