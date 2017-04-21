@@ -2,6 +2,7 @@ package com.dcu.estateagent;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
@@ -9,8 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.*;
 //import org.json.parser.JSONParser;
 //import org.json.parser.ParseException;
 import java.util.*;
@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 public class PropertyManager {
 
   private ArrayList<Property> properties = new ArrayList<Property>();
+  private LocalDate today = LocalDate.now();
   /*JSONParser parser = new JSONParser();
   JSONArray a = (JSONArray) parser.parse(new FileReader("./properties.json"));
   for (Object o : a) {
@@ -47,7 +48,7 @@ public class PropertyManager {
 		return Response.status(200).entity(prop).build();
   }
 
-  @PUT
+  @POST
   @Path("/add")
   @Consumes(MediaType.APPLICATION_JSON)
   public Response consumeJSON(Property prop) {
@@ -56,10 +57,10 @@ public class PropertyManager {
     return Response.status(200).entity(output).build();
   }
 
-  @GET
+  @POST
 	@Path("/bid?id{id}&&min={min}&&max={max}")
   @Produces(MediaType.APPLICATION_JSON)
-	public responce bidlProperty(@PathParam("id") int id, @PathParam("min") int min,@PathParam("max") int max){
+	public Responce bidlProperty(@PathParam("id") int id, @PathParam("min") int min,@PathParam("max") int max){
 		if (properties.isEmpty()) {
       return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
 		}
@@ -81,7 +82,6 @@ class Property {
   private int highestBid = 0;
   private LocalDate startDate;
 	private LocalDate endDate;
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   public Property(String type, int dist, int bed, int price) {
     this.type = type;
@@ -95,7 +95,7 @@ class Property {
   @Override
   public String toString(){
     try {
-      return new JSONObject().put("type", type).put("district", district).put("bedrooms", bedrooms).put("price", price).toString();
+      return new JSONObject().put("type", type).put("district", district).put("bedrooms", bedrooms).put("price", price).put("highestBid", highestBid).put("start", startDate).put("end", endDate).toString();
     } catch (JSONException e) {
       return null;
     }
