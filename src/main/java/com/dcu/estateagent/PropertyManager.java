@@ -84,7 +84,7 @@ class Property {
   private int district;
   private int bedrooms;
   private int price;
-  private int highestBid = 0;
+  private int bid = 0;
   private LocalDate startDate;
   private LocalDate endDate;
 
@@ -100,7 +100,7 @@ class Property {
   @Override
   public String toString(){
     try {
-      return new JSONObject().put("type", type).put("district", district).put("bedrooms", bedrooms).put("price", price).put("highestBid", highestBid).put("start", startDate).put("end", endDate).toString();
+      return new JSONObject().put("type", type).put("district", district).put("bedrooms", bedrooms).put("price", price).put("highestBid", bid).put("start", startDate).put("end", endDate).toString();
     } catch (JSONException e) {
       return null;
     }
@@ -150,7 +150,7 @@ class Property {
     this.bid = bid;
   }
 
-  public void getBid() {
+  public int getBid() {
     return this.bid;
   }
 }
