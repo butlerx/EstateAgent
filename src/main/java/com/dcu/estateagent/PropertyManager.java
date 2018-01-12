@@ -1,22 +1,17 @@
 package com.dcu.estateagent;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
-import org.json.*;
-//import org.json.parser.JSONParser;
-//import org.json.parser.ParseException;
-import java.util.*;
 import java.io.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.json.*;
 
 @Path("/api")
 public class PropertyManager {
@@ -60,7 +55,7 @@ public class PropertyManager {
   @POST
   @Path("/bid?id{id}&&bid={bid}")
   @Produces(MediaType.APPLICATION_JSON)
-  public Response bidProperty(@PathParam("id") int id, @PathParam("bid") int bid){
+  public Response bidProperty(@PathParam("id") int id, @PathParam("bid") int bid) {
     if (properties.isEmpty()) {
       return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
     }
@@ -69,7 +64,10 @@ public class PropertyManager {
     int prevBid = prop.getBid();
     LocalDate start = prop.getStart();
     LocalDate end = prop.getEnd();
-    if(bid >= prevBid && price <= bid && (start.isBefore(today)||start.equals(today))&&(end.isAfter(today)|| end.equals(today))) {
+    if (bid >= prevBid
+        && price <= bid
+        && (start.isBefore(today) || start.equals(today))
+        && (end.isAfter(today) || end.equals(today))) {
       prop.setBid(bid);
       properties.add(id, prop);
       String output = prop.toString();
@@ -98,9 +96,17 @@ class Property {
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     try {
-      return new JSONObject().put("type", type).put("district", district).put("bedrooms", bedrooms).put("price", price).put("highestBid", bid).put("start", startDate).put("end", endDate).toString();
+      return new JSONObject()
+          .put("type", type)
+          .put("district", district)
+          .put("bedrooms", bedrooms)
+          .put("price", price)
+          .put("highestBid", bid)
+          .put("start", startDate)
+          .put("end", endDate)
+          .toString();
     } catch (JSONException e) {
       return null;
     }
