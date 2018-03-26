@@ -11,13 +11,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("propertie")
+@Path("property")
 public class PropertyManager {
 
   private ArrayList<Property> properties = new ArrayList<Property>();
   private String[] types = {"apartment", "house"};
 
-  PropertyManager() {
+  public void seed() {
     Random rand = new Random();
 
     for (int i = 0; i < 100; i++) {
@@ -33,7 +33,11 @@ public class PropertyManager {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public String listAll() {
-    return this.properties.toString();
+    String res = "[";
+    for (Property p : properties) {
+      res += "{" + p + "},";
+    }
+    return res.substring(0, res.length() - 1) + "]";
   }
 
   @GET
