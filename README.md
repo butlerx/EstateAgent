@@ -1,15 +1,23 @@
 # EstateAgent
+
 Estate agent system
 
-Concurrency Assignment 2
-Using Java-WS or Java-RS implement an estate agent system
+### Development
+
+To compile in development run
+
+```
+docker-compose up --build
+```
 
 ### Build
+
 ```
 mvn clean package
 ```
 
 ### Deploy
+
 ```
 cp target/EstateAgent.war ~tomcat8/webapps
 systemctl restart tomcat8
