@@ -40,19 +40,19 @@ public class Property {
   }
 
   public LocalDate getStart() {
-    return startDate;
+    return this.startDate;
   }
 
   public LocalDate getEnd() {
-    return endDate;
+    return this.endDate;
   }
 
   public String getType() {
-    return type;
+    return this.type;
   }
 
   public int getDistrict() {
-    return district;
+    return this.district;
   }
 
   public int getBedrooms() {
@@ -60,7 +60,7 @@ public class Property {
   }
 
   public int getPrice() {
-    return price;
+    return this.price;
   }
 
   public void setType(String type) {
