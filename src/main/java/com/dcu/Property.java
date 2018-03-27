@@ -63,26 +63,6 @@ public class Property {
     return this.price;
   }
 
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  public void setDistrict(int dist) {
-    this.district = dist;
-  }
-
-  public void setBedrooms(int bed) {
-    this.bedrooms = bed;
-  }
-
-  public void setPrice(int price) {
-    this.price = price;
-  }
-
-  public void setBid(int bid) {
-    this.bid = bid;
-  }
-
   public int getBid() {
     return this.bid;
   }
