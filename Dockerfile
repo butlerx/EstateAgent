@@ -1,7 +1,10 @@
 FROM maven as build
-COPY . /app
 WORKDIR /app
+COPY pom.xml /app
+RUN mvn dependency:resolve
+COPY . /app
 RUN  mvn clean package
 
 FROM tomcat
-COPY --from=build /app/target/EstateAgent.war /usr/local/tomcat/webapps
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+COPY --from=build /app/target/EstateAgent.war /usr/local/tomcat/webapps/ROOT.war

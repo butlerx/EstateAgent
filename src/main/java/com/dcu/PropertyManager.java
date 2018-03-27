@@ -33,9 +33,11 @@ public class PropertyManager {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public String listAll() {
+    seed();
+    if (properties.size() == 0) return "[]";
     String res = "[";
     for (Property p : properties) {
-      res += "{" + p + "},";
+      res += p + ",";
     }
     return res.substring(0, res.length() - 1) + "]";
   }
@@ -44,6 +46,7 @@ public class PropertyManager {
   @Path("/{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getProperty(@PathParam("id") int id) {
+    seed();
     if (properties.size() < id) {
       return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
     }

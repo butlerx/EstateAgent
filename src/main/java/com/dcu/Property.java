@@ -7,35 +7,37 @@ public class Property {
   private int district;
   private int bedrooms;
   private int price;
-  private int bid = 0;
-  private LocalDate startDate;
-  private LocalDate endDate;
+  private int highestBid = 0;
+  private String bidder = "";
+  private final LocalDate startDate = LocalDate.now();
+  private final LocalDate endDate = LocalDate.now().plusDays(5);
 
   public Property(String type, int dist, int bed, int price) {
     this.type = type;
     this.district = dist;
     this.bedrooms = bed;
     this.price = price;
-    this.startDate = LocalDate.now();
-    this.endDate = LocalDate.now().plusDays(5);
   }
 
   @Override
   public String toString() {
-    return new StringBuffer(" type: ")
+    return new StringBuffer("{\"type\": \"")
         .append(this.type)
-        .append(" district: ")
+        .append("\", \"district\": ")
         .append(this.district)
-        .append(" bedrooms: ")
+        .append(", \"bedrooms\": ")
         .append(this.bedrooms)
-        .append(" price: ")
+        .append(", \"price\": ")
         .append(this.price)
-        .append(" higestBid: ")
-        .append(this.bid)
-        .append(" start: ")
+        .append(", \"higestBid\": ")
+        .append(this.highestBid)
+        .append(", \"bidder\": \"")
+        .append(this.bidder)
+        .append("\", \"start\": \"")
         .append(this.startDate)
-        .append(" end: ")
+        .append("\", \"end\": \"")
         .append(this.endDate)
+        .append("\"}")
         .toString();
   }
 
@@ -56,7 +58,7 @@ public class Property {
   }
 
   public int getBedrooms() {
-    return bedrooms;
+    return this.bedrooms;
   }
 
   public int getPrice() {
@@ -64,6 +66,20 @@ public class Property {
   }
 
   public int getBid() {
-    return this.bid;
+    return this.highestBid;
+  }
+
+  public String getBidder() {
+    return this.bidder;
+  }
+
+  public boolean bid(int offer, String bidder) {
+    if (offer < price) return false;
+    if (offer > this.highestBid) {
+      this.highestBid = offer;
+      this.bidder = bidder;
+      return true;
+    }
+    return false;
   }
 }
