@@ -34,7 +34,7 @@ public class PropertyManager {
   public List<Property> getAll(
       @DefaultValue("0") @QueryParam("min") int min,
       @DefaultValue("2147483647") @QueryParam("max") int max) {
-    LOGGER.fine("Get All");
+    LOGGER.fine("Get All(min: " + min + ", max: " + max + ")");
     return properties
         .getAll()
         .stream()
