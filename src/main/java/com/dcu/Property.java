@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Property {
   private String type;
+  private int id = 0;
   private int district;
   private int bedrooms;
   private int price;
@@ -12,11 +13,12 @@ public class Property {
   private final LocalDate startDate = LocalDate.now();
   private final LocalDate endDate = LocalDate.now().plusDays(5);
 
-  public Property(String type, int dist, int bed, int price) {
+  public Property(String type, int dist, int bed, int price, int id) {
     this.type = type;
     this.district = dist;
     this.bedrooms = bed;
     this.price = price;
+    this.id = id;
   }
 
   @Override

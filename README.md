@@ -30,6 +30,7 @@ systemctl restart tomcat8
 * Client can POST property listing for sale
 * Client can POST bid on property
 * Server must update list of bids
+* Client can filter by price range
 
 ### Extra Requirements
 

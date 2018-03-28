@@ -2,14 +2,17 @@ package com.dcu;
 
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -28,9 +31,16 @@ public class PropertyManager {
 
   @GET
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public List<Property> getAll() {
+  public List<Property> getAll(
+      @DefaultValue("0") @QueryParam("min") int min,
+      @DefaultValue("2147483647") @QueryParam("max") int max) {
     LOGGER.fine("Get All");
-    return properties.getAll();
+    return properties
+        .getAll()
+        .stream()
+        .filter(p -> p.getPrice() > min)
+        .filter(p -> p.getPrice() < max)
+        .collect(Collectors.toList());
   }
 
   @GET
