@@ -1,0 +1,8 @@
+target
+*.md
+*.yml
+.idea
+.settings
+*.iml
+Dockerfile
+*.log

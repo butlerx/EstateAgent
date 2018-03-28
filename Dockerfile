@@ -3,8 +3,8 @@ WORKDIR /app
 COPY pom.xml /app
 RUN mvn dependency:resolve
 COPY . /app
-RUN  mvn clean package
+RUN  mvn package
 
 FROM tomcat
-RUN rm -rf /usr/local/tomcat/webapps/ROOT
+RUN rm -rf /usr/local/tomcat/webapps/*
 COPY --from=build /app/target/EstateAgent.war /usr/local/tomcat/webapps/ROOT.war

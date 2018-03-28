@@ -1,62 +1,67 @@
 package com.dcu;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Path("property")
 public class PropertyManager {
 
-  private ArrayList<Property> properties = new ArrayList<Property>();
-  private String[] types = {"apartment", "house"};
+  private static final Logger LOGGER = Logger.getLogger(PropertyManager.class.getName());
+  @Autowired private PropertyDB properties;
 
-  public void seed() {
-    Random rand = new Random();
-
-    for (int i = 0; i < 100; i++) {
-      this.properties.add(
-          new Property(
-              types[rand.nextInt(types.length - 1)],
-              rand.nextInt(24) + 1,
-              rand.nextInt(4) + 1,
-              100000 + (int) (rand.nextDouble() * ((1000000 - 100000) + 1))));
-    }
+  public PropertyManager() {
+    LOGGER.fine("PropertyManager()");
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  public String listAll() {
-    seed();
-    if (properties.size() == 0) return "[]";
-    String res = "[";
-    for (Property p : properties) {
-      res += p + ",";
-    }
-    return res.substring(0, res.length() - 1) + "]";
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public List<Property> getAll() {
+    LOGGER.fine("Get All");
+    return properties.getAll();
   }
 
   @GET
   @Path("/{id}")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response getProperty(@PathParam("id") int id) {
-    seed();
-    if (properties.size() < id) {
-      return Response.status(Response.Status.NOT_FOUND).entity("ID not found: " + id).build();
-    }
-    return Response.status(200).entity(properties.get(id)).build();
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public Property get(@PathParam("id") int id) {
+    return properties.get(id);
   }
 
   @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  public Response consumeJSON(Property prop) {
-    properties.add(prop);
-    return Response.status(200).entity("Property Added with id: " + properties.size()).build();
+  @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public Response add(Property prop, @Context UriInfo uriInfo) {
+    int id = properties.add(prop);
+    return Response.status(Response.Status.CREATED.getStatusCode())
+        .header("Location", String.format("%s/%s", uriInfo.getAbsolutePath().toString(), id))
+        .build();
+  }
+
+  @PUT
+  @Path("/{id}")
+  @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public Response update(Property prop, @PathParam("id") int id) {
+    properties.update(prop, id);
+    return Response.status(Response.Status.OK.getStatusCode()).build();
+  }
+
+  @DELETE
+  @Path("/{id}")
+  @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public Response delete(Property prop, @PathParam("id") int id) {
+    properties.delete(id);
+    return Response.status(Response.Status.OK.getStatusCode()).build();
   }
 }
