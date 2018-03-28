@@ -13,4 +13,5 @@
         <servlet-name>Estate Agent webservice</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+    <display-name>com.dcu.estateAgent</display-name>
 </web-app>
