@@ -19,6 +19,7 @@ public class PropertyDBImpl implements PropertyDB {
               rand.nextInt(24) + 1,
               rand.nextInt(4) + 1,
               100000 + (int) (rand.nextDouble() * ((1000000 - 100000) + 1)),
+              rand.nextInt(14) + 1,
               i));
     }
   }
@@ -52,6 +53,7 @@ public class PropertyDBImpl implements PropertyDB {
             prop.getDistrict(),
             prop.getBedrooms(),
             prop.getPrice(),
+            prop.getDayLeft(),
             properties.size());
     properties.add(newProp);
     return properties.size();

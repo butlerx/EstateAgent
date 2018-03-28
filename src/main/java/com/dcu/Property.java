@@ -1,6 +1,7 @@
 package com.dcu;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Property {
   private String type;
@@ -11,13 +12,14 @@ public class Property {
   private int highestBid = 0;
   private String bidder = "";
   private final LocalDate startDate = LocalDate.now();
-  private final LocalDate endDate = LocalDate.now().plusDays(5);
+  private LocalDate endDate;
 
-  public Property(String type, int dist, int bed, int price, int id) {
+  public Property(String type, int dist, int bed, int price, int end, int id) {
     this.type = type;
     this.district = dist;
     this.bedrooms = bed;
     this.price = price;
+    this.endDate = LocalDate.now().plusDays(end);
     this.id = id;
   }
 
@@ -73,6 +75,10 @@ public class Property {
 
   public String getBidder() {
     return this.bidder;
+  }
+
+  public int getDayLeft() {
+    return (int) ChronoUnit.DAYS.between(startDate, endDate);
   }
 
   public boolean bid(int offer, String bidder) {

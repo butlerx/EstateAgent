@@ -74,4 +74,14 @@ public class PropertyManager {
     properties.delete(id);
     return Response.status(Response.Status.OK.getStatusCode()).build();
   }
+
+  @POST
+  @Path("/{id}/bid")
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public Response bid(Bid bid, @PathParam("id") int id, @Context UriInfo uriInfo) {
+    Property prop = properties.get(id);
+    return Response.status(Response.Status.CREATED.getStatusCode())
+        .entity(prop.bid(bid.getOffer(), bid.getBidder()))
+        .build();
+  }
 }
