@@ -4,15 +4,15 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Property {
-  private String type;
-  private int id = 0;
-  private int district;
-  private int bedrooms;
-  private int price;
+  private final String type;
+  private final int id;
+  private final int district;
+  private final int bedrooms;
+  private final int price;
   private int highestBid = 0;
   private String bidder = "";
   private final LocalDate startDate = LocalDate.now();
-  private LocalDate endDate;
+  private final LocalDate endDate;
 
   public Property(String type, int dist, int bed, int price, int end, int id) {
     this.type = type;
@@ -25,24 +25,23 @@ public class Property {
 
   @Override
   public String toString() {
-    return new StringBuffer("{\"type\": \"")
-        .append(this.type)
-        .append("\", \"district\": ")
-        .append(this.district)
-        .append(", \"bedrooms\": ")
-        .append(this.bedrooms)
-        .append(", \"price\": ")
-        .append(this.price)
-        .append(", \"higestBid\": ")
-        .append(this.highestBid)
-        .append(", \"bidder\": \"")
-        .append(this.bidder)
-        .append("\", \"start\": \"")
-        .append(this.startDate)
-        .append("\", \"end\": \"")
-        .append(this.endDate)
-        .append("\"}")
-        .toString();
+    return "{\"type\": \""
+        + this.type
+        + "\", \"district\": "
+        + this.district
+        + ", \"bedrooms\": "
+        + this.bedrooms
+        + ", \"price\": "
+        + this.price
+        + ", \"higestBid\": "
+        + this.highestBid
+        + ", \"bidder\": \""
+        + this.bidder
+        + "\", \"start\": \""
+        + this.startDate
+        + "\", \"end\": \""
+        + this.endDate
+        + "\"}";
   }
 
   public LocalDate getStart() {
@@ -79,6 +78,10 @@ public class Property {
 
   public int getDayLeft() {
     return (int) ChronoUnit.DAYS.between(startDate, endDate);
+  }
+
+  public int getId() {
+    return id;
   }
 
   public boolean bid(int offer, String bidder) {

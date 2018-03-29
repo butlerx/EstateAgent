@@ -1,8 +1,8 @@
 package com.dcu;
 
 public class Bid {
-  private String bidder;
-  private int offer;
+  private final String bidder;
+  private final int offer;
 
   Bid(String bidder, int offer) {
     this.bidder = bidder;

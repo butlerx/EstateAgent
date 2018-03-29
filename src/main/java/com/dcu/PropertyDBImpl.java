@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PropertyDBImpl implements PropertyDB {
-  private final List<Property> properties = new ArrayList<Property>();
-  private final String[] types = {"apartment", "house"};
+  private final List<Property> properties = new ArrayList<>();
 
   public PropertyDBImpl() {
     Random rand = new Random();
+    String[] types = {"apartment", "house"};
     for (int i = 0; i < 100; i++) {
       this.properties.add(
           new Property(
@@ -47,15 +47,14 @@ public class PropertyDBImpl implements PropertyDB {
   }
 
   public int add(Property prop) {
-    Property newProp =
+    properties.add(
         new Property(
             prop.getType(),
             prop.getDistrict(),
             prop.getBedrooms(),
             prop.getPrice(),
             prop.getDayLeft(),
-            properties.size());
-    properties.add(newProp);
+            properties.size()));
     return properties.size();
   }
 }

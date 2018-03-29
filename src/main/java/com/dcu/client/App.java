@@ -7,10 +7,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public class App {
+class App {
 
   private static final String REST_URI = "http://localhost:8080/api/property";
-  private Client client = ClientBuilder.newClient();
+  private final Client client = ClientBuilder.newClient();
 
   public Response createProperty(Property prop) {
     return client
