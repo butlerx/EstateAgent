@@ -16,6 +16,8 @@ public @interface PropertyView {
 
   public static class Factory extends AnnotationLiteral<PropertyView> implements PropertyView {
 
+    private static final long serialVersionUID = 1000;
+
     private Factory() {}
 
     public static PropertyView get() {

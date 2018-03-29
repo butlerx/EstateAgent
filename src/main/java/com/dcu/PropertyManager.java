@@ -43,13 +43,6 @@ public class PropertyManager {
         .collect(Collectors.toList());
   }
 
-  @GET
-  @Path("/{id}")
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public Property get(@PathParam("id") final int id) {
-    return properties.get(id);
-  }
-
   @POST
   @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Response add(final Property prop, @Context final UriInfo uriInfo) {
@@ -57,6 +50,13 @@ public class PropertyManager {
     return Response.status(Response.Status.CREATED.getStatusCode())
         .header("Location", String.format("%s/%s", uriInfo.getAbsolutePath().toString(), id))
         .build();
+  }
+
+  @GET
+  @Path("/{id}")
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public Property get(@PathParam("id") final int id) {
+    return properties.get(id);
   }
 
   @PUT

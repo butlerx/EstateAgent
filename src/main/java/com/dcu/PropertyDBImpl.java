@@ -15,7 +15,7 @@ public class PropertyDBImpl implements PropertyDB {
     for (int i = 0; i < 100; i++) {
       this.properties.add(
           new Property(
-              types[rand.nextInt(types.length - 1)],
+              types[rand.nextInt(types.length)],
               rand.nextInt(24) + 1,
               rand.nextInt(4) + 1,
               100000 + (int) (rand.nextDouble() * ((1000000 - 100000) + 1)),
