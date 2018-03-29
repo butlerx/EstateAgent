@@ -4,7 +4,7 @@ public class Bid {
   final String bidder;
   final int offer;
 
-  Bid(String bidder, int offer) {
+  Bid(final String bidder, final int offer) {
     this.bidder = bidder;
     this.offer = offer;
   }

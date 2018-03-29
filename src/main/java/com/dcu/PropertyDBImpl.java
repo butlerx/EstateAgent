@@ -28,25 +28,21 @@ public class PropertyDBImpl implements PropertyDB {
     return properties;
   }
 
-  public Property get(int id) {
-    if (properties.size() < id) {
-      throw new NotFound();
-    }
+  public Property get(final int id) {
+    if (properties.size() < id) throw new NotFound();
     return properties.get(id);
   }
 
-  public void update(Property prop, int id) {
-    if (properties.size() < id) {
-      throw new NotFound();
-    }
+  public void update(final Property prop, final int id) {
+    if (properties.size() < id) throw new NotFound();
     properties.set(id, prop);
   }
 
-  public void delete(int id) {
+  public void delete(final int id) {
     properties.remove(id);
   }
 
-  public int add(Property prop) {
+  public int add(final Property prop) {
     properties.add(
         new Property(
             prop.getType(),

@@ -20,7 +20,13 @@ public class Property {
   private int highestBid = 0;
   private String bidder = "";
 
-  public Property(String type, int dist, int bed, int price, int end, int id) {
+  public Property(
+      final String type,
+      final int dist,
+      final int bed,
+      final int price,
+      final int end,
+      final int id) {
     this.type = type;
     this.district = dist;
     this.bedrooms = bed;
@@ -71,7 +77,7 @@ public class Property {
     return id;
   }
 
-  public void bid(int offer, String bidder) {
+  public void bid(final int offer, final String bidder) {
     if (offer < price || offer < this.highestBid) throw new BidTooLow();
     this.highestBid = offer;
     this.bidder = bidder;
@@ -81,10 +87,9 @@ public class Property {
     return new Bid(this.bidder, this.highestBid);
   }
 
-  public void book(LocalDateTime time, String booker) {
-    Booking slot = Arrays.stream(this.viewings).filter(x -> time.equals(x.time)).findFirst().get();
+  public void book(final LocalDateTime time, final String booker) {
     try {
-      slot.book(booker);
+      Arrays.stream(this.viewings).filter(x -> time.equals(x.time)).findFirst().get().book(booker);
     } catch (AlreadyBooked e) {
       throw e;
     }

@@ -5,11 +5,11 @@ import java.util.List;
 public interface PropertyDB {
   List<Property> getAll();
 
-  Property get(int id);
+  Property get(final int id);
 
-  void update(Property prop, int id);
+  void update(final Property prop, final int id);
 
-  void delete(int id);
+  void delete(final int id);
 
-  int add(Property prop);
+  int add(final Property prop);
 }

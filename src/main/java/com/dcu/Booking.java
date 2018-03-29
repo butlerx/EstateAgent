@@ -12,7 +12,7 @@ class Booking {
     this.time = time;
   }
 
-  public void book(String booker) {
+  public void book(final String booker) {
     if (!free) throw new AlreadyBooked();
     this.free = false;
     this.booker = booker;

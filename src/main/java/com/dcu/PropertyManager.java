@@ -33,27 +33,26 @@ public class PropertyManager {
   @GET
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public List<Property> getAll(
-      @DefaultValue("0") @QueryParam("min") int min,
-      @DefaultValue("2147483647") @QueryParam("max") int max) {
+      @DefaultValue("0") @QueryParam("min") final int min,
+      @DefaultValue("2147483647") @QueryParam("max") final int max) {
     LOGGER.fine("Get All(min: " + min + ", max: " + max + ")");
     return properties
         .getAll()
         .stream()
-        .filter(p -> p.getPrice() > min)
-        .filter(p -> p.getPrice() < max)
+        .filter(p -> p.getPrice() > min && p.getPrice() < max)
         .collect(Collectors.toList());
   }
 
   @GET
   @Path("/{id}")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public Property get(@PathParam("id") int id) {
+  public Property get(@PathParam("id") final int id) {
     return properties.get(id);
   }
 
   @POST
   @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public Response add(Property prop, @Context UriInfo uriInfo) {
+  public Response add(final Property prop, @Context final UriInfo uriInfo) {
     int id = properties.add(prop);
     return Response.status(Response.Status.CREATED.getStatusCode())
         .header("Location", String.format("%s/%s", uriInfo.getAbsolutePath().toString(), id))
@@ -63,7 +62,7 @@ public class PropertyManager {
   @PUT
   @Path("/{id}")
   @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public Response update(Property prop, @PathParam("id") int id) {
+  public Response update(final Property prop, @PathParam("id") final int id) {
     properties.update(prop, id);
     return Response.status(Response.Status.OK.getStatusCode()).build();
   }
@@ -71,7 +70,7 @@ public class PropertyManager {
   @DELETE
   @Path("/{id}")
   @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public Response delete(Property prop, @PathParam("id") int id) {
+  public Response delete(final Property prop, @PathParam("id") final int id) {
     properties.delete(id);
     return Response.status(Response.Status.OK.getStatusCode()).build();
   }
@@ -79,14 +78,15 @@ public class PropertyManager {
   @GET
   @Path("/{id}/bid")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public Bid getBid(@PathParam("id") int id) {
+  public Bid getBid(@PathParam("id") final int id) {
     return properties.get(id).getBid();
   }
 
   @POST
   @Path("/{id}/bid")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public Response bid(Bid bid, @PathParam("id") int id, @Context UriInfo uriInfo) {
+  public Response bid(
+      final Bid bid, @PathParam("id") final int id, @Context final UriInfo uriInfo) {
     properties.get(id).bid(bid.offer, bid.bidder);
     return Response.status(Response.Status.CREATED.getStatusCode())
         .entity("Bid of " + bid.offer + " on property " + id + " accepted")
@@ -96,14 +96,15 @@ public class PropertyManager {
   @GET
   @Path("/{id}/booking")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public LocalDateTime[] getBooking(@PathParam("id") int id) {
+  public LocalDateTime[] getBooking(@PathParam("id") final int id) {
     return properties.get(id).getFreeViewings();
   }
 
   @POST
   @Path("/{id}/booking")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public Response book(Booking booking, @PathParam("id") int id, @Context UriInfo uriInfo) {
+  public Response book(
+      final Booking booking, @PathParam("id") final int id, @Context final UriInfo uriInfo) {
     properties.get(id).book(booking.time, booking.getBooker());
     return Response.status(Response.Status.CREATED.getStatusCode())
         .entity("Booking for " + booking.time + " on property " + id + " accepted")
