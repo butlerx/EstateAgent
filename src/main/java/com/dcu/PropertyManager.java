@@ -1,5 +1,6 @@
 package com.dcu;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -75,13 +76,37 @@ public class PropertyManager {
     return Response.status(Response.Status.OK.getStatusCode()).build();
   }
 
+  @GET
+  @Path("/{id}/bid")
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public Bid getBid(@PathParam("id") int id) {
+    return properties.get(id).getBid();
+  }
+
   @POST
   @Path("/{id}/bid")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Response bid(Bid bid, @PathParam("id") int id, @Context UriInfo uriInfo) {
-    Property prop = properties.get(id);
+    properties.get(id).bid(bid.offer, bid.bidder);
     return Response.status(Response.Status.CREATED.getStatusCode())
-        .entity(prop.bid(bid.getOffer(), bid.getBidder()))
+        .entity("Bid of " + bid.offer + " on property " + id + " accepted")
+        .build();
+  }
+
+  @GET
+  @Path("/{id}/booking")
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public LocalDateTime[] getBooking(@PathParam("id") int id) {
+    return properties.get(id).getFreeViewings();
+  }
+
+  @POST
+  @Path("/{id}/booking")
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public Response book(Booking booking, @PathParam("id") int id, @Context UriInfo uriInfo) {
+    properties.get(id).book(booking.time, booking.getBooker());
+    return Response.status(Response.Status.CREATED.getStatusCode())
+        .entity("Booking for " + booking.time + " on property " + id + " accepted")
         .build();
   }
 }

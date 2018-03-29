@@ -1,19 +1,19 @@
 package com.dcu;
 
 public class Bid {
-  private final String bidder;
-  private final int offer;
+  final String bidder;
+  final int offer;
 
   Bid(String bidder, int offer) {
     this.bidder = bidder;
     this.offer = offer;
   }
 
-  int getOffer() {
+  public int getOffer() {
     return this.offer;
   }
 
-  String getBidder() {
+  public String getBidder() {
     return this.bidder;
   }
 }
