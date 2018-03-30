@@ -13,10 +13,10 @@
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
           <li class="open">
-            <a href="#" class="dropdown-toggle btn-magnify" data-toggle="dropdown">
+            <router-link to="properties" class="dropdown-toggle btn-magnify" data-toggle="dropdown">
               <i class="ti-panel"></i>
-              <p>Stats</p>
-            </a>
+              <p>Properties</p>
+            </router-link>
           </li>
           <li>
             <a href="#" class="btn-rotate">

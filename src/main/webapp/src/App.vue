@@ -5,10 +5,10 @@
     <side-bar type="navbar" :sidebar-links="$sidebar.sidebarLinks">
       <ul class="nav navbar-nav">
         <li>
-          <a class="dropdown-toggle" data-toggle="dropdown">
+          <router-link to="properties" class="dropdown-toggle" data-toggle="dropdown">
             <i class="ti-panel"></i>
-            <p>Stats</p>
-          </a>
+            <p>Properties</p>
+          </router-link>
         </li>
         <li>
           <a>

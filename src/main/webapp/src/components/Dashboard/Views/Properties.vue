@@ -2,7 +2,12 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <paper-table type="hover" :title="table1.title" :sub-title="table1.subTitle" :data="table1.data" :columns="table1.columns">
+        <div class="filter">
+          <input v-model.number="filter.min" placeholder="min price" type="number">
+          <input v-model.number="filter.max" placeholder="max price" type="number">
+          <button v-on:click="getProperties(filter.min, filter.max)">filter</button>
+        </div>
+        <paper-table :annotations="annotations" :sub-title="subTitle" :data="rows" :columns="columns">
         </paper-table>
       </div>
     </div>
@@ -17,30 +22,36 @@ export default {
   },
   data() {
     return {
-      table1: {
-        title: 'Properties',
-        subTitle: 'List of all properties',
-        columns: [
-          'id',
-          'type',
-          'bedrooms',
-          'district',
-          'start',
-          'end',
-          'price',
-        ],
-        data: [],
+      subTitle: 'List of all properties',
+      columns: ['id', 'type', 'bedrooms', 'district', 'start', 'end', 'price'],
+      annotations: {
+        district: 'D',
+        price: '€',
       },
+      rows: [],
+      filter: {},
     };
   },
+  methods: {
+    getProperties(min = 0, max = 2147483647) {
+      const filter = `?min=${min}&max=${max}`;
+      fetch(`/api/property${filter}`)
+        .then(response => response.json())
+        .then(json => {
+          this.rows = json;
+        });
+    },
+  },
+
   mounted() {
-    fetch('/api/property/')
-      .then(response => response.json())
-      .then(json => {
-        this.table1.data = json;
-      });
+    this.getProperties();
   },
 };
 </script>
-<style>
+<style style="scss" scoped>
+.filter {
+  padding: 1em 1em 0;
+  display: flex;
+  justify-content: flex-end;
+}
 </style>
