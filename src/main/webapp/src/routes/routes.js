@@ -7,11 +7,12 @@ export default [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/admin',
+    redirect: '/admin/overview',
   },
   {
     path: '/admin',
     component: DashboardLayout,
+    redirect: '/admin/overview',
     children: [
       {
         path: 'overview',

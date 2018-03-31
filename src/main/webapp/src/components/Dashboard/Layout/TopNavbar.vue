@@ -36,7 +36,9 @@ export default {
   computed: {
     routeName() {
       const { name } = this.$route;
-      return this.capitalizeFirstLetter(name);
+      return name !== undefined
+        ? this.capitalizeFirstLetter(name)
+        : 'Estate Agent';
     },
   },
   data() {
@@ -45,8 +47,8 @@ export default {
     };
   },
   methods: {
-    capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    capitalizeFirstLetter(msg) {
+      return msg.charAt(0).toUpperCase() + msg.slice(1);
     },
     toggleNotificationDropDown() {
       this.activeNotifications = !this.activeNotifications;
