@@ -41,7 +41,7 @@ public class Property {
         viewings.add(new Booking(LocalDateTime.of(date, time)));
       }
     }
-    this.viewings = viewings.toArray(new Booking[viewings.size()]);
+    this.viewings = viewings.toArray(new Booking[0]);
   }
 
   public LocalDate getStart() {
@@ -88,17 +88,13 @@ public class Property {
   }
 
   public void book(final LocalDateTime time, final String booker) {
-    try {
-      Arrays.stream(this.viewings).filter(x -> time.equals(x.time)).findFirst().get().book(booker);
-    } catch (AlreadyBooked e) {
-      throw e;
-    }
+    Arrays.stream(this.viewings).filter(x -> time.equals(x.time)).findFirst().get().book(booker);
   }
 
   @PropertyView
   public LocalDateTime[] getFreeViewings() {
     return Arrays.stream(this.viewings)
-        .filter(x -> x.getFree())
+        .filter(Booking::getFree)
         .map(x -> x.time)
         .toArray(LocalDateTime[]::new);
   }

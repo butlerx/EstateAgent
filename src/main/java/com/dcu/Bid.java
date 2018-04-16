@@ -1,5 +1,6 @@
 package com.dcu;
 
+@SuppressWarnings("ALL")
 public class Bid {
   final String bidder;
   final int offer;
