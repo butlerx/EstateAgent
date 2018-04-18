@@ -3,14 +3,4 @@ services:
   tomcat:
     build: .
     ports:
-      - "8088:8080"
-  frontend:
-    image: node:carbon
-    working_dir: /usr/src/app
-    volumes:
-      - ./src/main/webapp:/usr/src/app:Z
-    ports:
       - "8080:8080"
-    command: yarn dev
-    depends_on:
-      - tomcat

@@ -4,16 +4,6 @@ Estate agent system
 
 ### Development
 
-#### Setup
-
-On first run do
-
-```
-docker-compose -f docker-compose.yml -f docker-compose.install.yml up
-```
-
-This only has to be run when the `package.json` is modified
-
 #### Running
 
 To compile in development run
@@ -29,7 +19,7 @@ You can access the server on `localhost:8080`
 To produce WAR file run
 
 ```
-docker-compose up --build tomcat
+docker-compose up --build
 docker cp estateagent_tomcat_1:/usr/local/tomcat/webapps/ROOT.war ROOT.war
 ```
 
