@@ -181,21 +181,24 @@ class App {
           System.out.print(
               String.join("\n", "Choose a property type: ", "(1) house", "(2) apartment"));
           final int typeArg = scanner.nextInt();
+          String type = "";
           if (typeArg == 1) {
-            final String type = "house";
+            type = "house";
           } else if (typeArg == 2) {
-            final String type = "apartment";
+            type = "apartment";
           } else {
             System.out.println("Dont recognise type");
             break;
           }
-          // TODO
-          // get postcode
-          // get bedrooms
-          // get price
-          // get days to offer for
-          // get next available id, get all propertys and use length() // hack i know but meh
-          // push to server
+          System.out.print("What is the postcode: ");
+          final int postcode = scanner.nextInt();
+          System.out.print("How many bedroos does it have: ");
+          final int bedrooms = scanner.nextInt();
+          System.out.print("What is the asking price: ");
+          final int price = scanner.nextInt();
+          System.out.print("How many days to offer for: ");
+          final int days = scanner.nextInt();
+          props.createProperty(new Property(type, postcode, bedrooms, price, days, 0));
           break;
         case 0:
           System.exit(0);
