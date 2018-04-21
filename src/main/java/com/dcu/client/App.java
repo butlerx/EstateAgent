@@ -35,10 +35,11 @@ class PropertyManager {
         .get(Property.class);
   }
 
-  // TODO add args for min and max
-  public List<Property> getAllProperty() {
+  public List<Property> getAllProperty(final int min, final int max) {
     return client
         .target(REST_URI)
+        .queryParam("min", min)
+        .queryParam("max", max)
         .request(MediaType.APPLICATION_JSON)
         .get(new GenericType<List<Property>>() {});
   }
@@ -99,11 +100,20 @@ class App {
               "(6) Book viewing for property",
               "(7) Create Property",
               "(0) quit"));
-      int input = scanner.nextInt();
+      final int input = scanner.nextInt();
       switch (input) {
         case 1:
-          // TODO Add prompt for min and max price
-          System.out.println(props.getAllProperty());
+          System.out.println("Do You want to filter by price (y/N)");
+          final String filter = scanner.nextLine();
+          int min = 0;
+          int max = 2147483647;
+          if ("y".equals(filter) && "Y".equals(filter)) {
+            System.out.print("What is your minimum price");
+            min = scanner.nextInt();
+            System.out.print("What is your maximum price");
+            max = scanner.nextInt();
+          }
+          System.out.println(props.getAllProperty(min, max));
           break;
         case 2:
           System.out.print("Whats the id of the property: ");
