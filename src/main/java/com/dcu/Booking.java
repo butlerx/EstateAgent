@@ -2,13 +2,13 @@ package com.dcu;
 
 import java.time.LocalDateTime;
 
-class Booking {
+public class Booking {
 
   private boolean free = true;
   private String booker = "";
   public final LocalDateTime time;
 
-  Booking(LocalDateTime time) {
+  public Booking(LocalDateTime time) {
     this.time = time;
   }
 

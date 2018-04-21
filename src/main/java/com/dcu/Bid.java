@@ -1,11 +1,10 @@
 package com.dcu;
 
-@SuppressWarnings("ALL")
 public class Bid {
   final String bidder;
   final int offer;
 
-  Bid(final String bidder, final int offer) {
+  public Bid(final String bidder, final int offer) {
     this.bidder = bidder;
     this.offer = offer;
   }
