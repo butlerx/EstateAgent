@@ -1,4 +1,4 @@
-FROM maven:3-jdk-9 as build
+FROM maven as build
 WORKDIR /app
 COPY pom.xml /app
 RUN mvn dependency:resolve

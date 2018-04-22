@@ -15,10 +15,13 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 class PropertyManager {
   private static final String REST_URI = "http://localhost:8080/api/property";
-  private final Client client = ClientBuilder.newClient();
+  private static final Client client = ClientBuilder.newBuilder()
+    .register(JacksonFeature.class)
+    .build();
 
   public Response createProperty(Property prop) {
     return client
