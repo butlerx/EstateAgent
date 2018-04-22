@@ -14,7 +14,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 class PropertyManager {
@@ -23,11 +22,11 @@ class PropertyManager {
     .register(JacksonFeature.class)
     .build();
 
-  public Response createProperty(Property prop) {
-    return client
-        .target(REST_URI)
-        .request(MediaType.APPLICATION_JSON)
-        .post(Entity.entity(prop, MediaType.APPLICATION_JSON));
+  public void createProperty(Property prop) {
+    client
+      .target(REST_URI)
+      .request(MediaType.APPLICATION_JSON)
+      .post(Entity.entity(prop, MediaType.APPLICATION_JSON));
   }
 
   public Property getProperty(int id) {
@@ -56,13 +55,13 @@ class PropertyManager {
         .get(Bid.class);
   }
 
-  public Response placeBid(int id, Bid bid) {
-    return client
-        .target(REST_URI)
-        .path(String.valueOf(id))
-        .path("bid")
-        .request(MediaType.APPLICATION_JSON)
-        .post(Entity.entity(bid, MediaType.APPLICATION_JSON));
+  public void placeBid(int id, Bid bid) {
+    client
+      .target(REST_URI)
+      .path(String.valueOf(id))
+      .path("bid")
+      .request(MediaType.APPLICATION_JSON)
+      .post(Entity.entity(bid, MediaType.APPLICATION_JSON));
   }
 
   public List<LocalDateTime> getBooking(int id) {
@@ -74,13 +73,13 @@ class PropertyManager {
         .get(new GenericType<List<LocalDateTime>>() {});
   }
 
-  public Response makeBooking(int id, Booking booking) {
-    return client
-        .target(REST_URI)
-        .path(String.valueOf(id))
-        .path("booking")
-        .request(MediaType.APPLICATION_JSON)
-        .post(Entity.entity(booking, MediaType.APPLICATION_JSON));
+  public void makeBooking(int id, Booking booking) {
+    client
+      .target(REST_URI)
+      .path(String.valueOf(id))
+      .path("booking")
+      .request(MediaType.APPLICATION_JSON)
+      .post(Entity.entity(booking, MediaType.APPLICATION_JSON));
   }
 }
 
@@ -135,7 +134,7 @@ class App {
             System.out.println(
                 "The Property has an asking price of "
                     + prop.getPrice()
-                    + "\nThe Higgest bid is "
+                    + "\nThe Highest bid is "
                     + prop.getBid().getOffer());
             int offer = scanner.nextInt();
             while (offer <= prop.getBid().getOffer()) {
@@ -159,14 +158,14 @@ class App {
           System.out.print("Whats the id of the property: ");
           propID = scanner.nextInt();
           boolean bookingMade = false;
-          // This actually results in a lot of api calls but java lamda needs the use of finals
+          // This actually results in a lot of api calls but java lambda needs the use of finals
           while (!bookingMade) {
             List<LocalDateTime> freeViewings = props.getBooking(propID);
-            System.out.println("Avalible Viewing :\n" + freeViewings);
+            System.out.println("Available Viewing :\n" + freeViewings);
             final LocalDateTime slot =
                 LocalDateTime.parse(scanner.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            if (!freeViewings.stream().anyMatch(viewing -> viewing == slot)) {
-              System.out.print("Booking not availible");
+            if (freeViewings.stream().noneMatch(viewing -> viewing == slot)) {
+              System.out.print("Booking not available");
             } else {
               try {
                 Booking booking = new Booking(slot);
@@ -174,7 +173,7 @@ class App {
                 props.makeBooking(propID, booking);
                 bookingMade = true;
               } catch (AlreadyBooked e) {
-                System.out.print("Booking not availible");
+                System.out.print("Booking not available");
               }
             }
           }
@@ -184,18 +183,18 @@ class App {
           System.out.print(
               String.join("\n", "Choose a property type: ", "(1) house", "(2) apartment"));
           final int typeArg = scanner.nextInt();
-          String type = "";
+          String type;
           if (typeArg == 1) {
             type = "house";
           } else if (typeArg == 2) {
             type = "apartment";
           } else {
-            System.out.println("Dont recognise type");
+            System.out.println("Don't recognise type");
             break;
           }
           System.out.print("What is the postcode: ");
           final int postcode = scanner.nextInt();
-          System.out.print("How many bedroos does it have: ");
+          System.out.print("How many bedrooms does it have: ");
           final int bedrooms = scanner.nextInt();
           System.out.print("What is the asking price: ");
           final int price = scanner.nextInt();

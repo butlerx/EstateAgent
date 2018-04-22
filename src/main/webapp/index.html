@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress SpellCheckingInspection -->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -8,16 +9,108 @@
     <link rel="stylesheet" href="/assets/css/2.styles.d18b8fad.css">
   </head>
   <body>
-    <div id="app" data-server-rendered="true"><div class="theme-container no-navbar no-sidebar"><!----><div class="sidebar"><!----><ul class="sidebar-links"><li><a href="/Design.html" class="active sidebar-link">Design Document</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/Design.html#system-requirements" class="sidebar-link">System Requirements</a></li><li class="sidebar-sub-header"><a href="/Design.html#installation" class="sidebar-link">Installation</a></li><li class="sidebar-sub-header"><a href="/Design.html#structure" class="sidebar-link">Structure</a></li><li class="sidebar-sub-header"><a href="/Design.html#route" class="sidebar-link">Route</a></li></ul></li><li><a href="/" class="sidebar-link">EstateAgent</a></li></ul></div><div class="page"><div class="content"><h1 id="design-document"><a href="#design-document" aria-hidden="true" class="header-anchor">#</a> Design Document</h1><h2 id="system-requirements"><a href="#system-requirements" aria-hidden="true" class="header-anchor">#</a> System Requirements</h2><ul><li>Tomcat8</li><li>Maven</li></ul><h2 id="installation"><a href="#installation" aria-hidden="true" class="header-anchor">#</a> Installation</h2><pre class="language-text"><code> mvn clean package
-</code></pre><p>Copy the outputted <code>./target/EstateAgent.war</code> file into the <code>webapps</code> directory
-in your tomcat installation.</p><p>Restart tomcat</p><h2 id="structure"><a href="#structure" aria-hidden="true" class="header-anchor">#</a> Structure</h2><h3 id="objects"><a href="#objects" aria-hidden="true" class="header-anchor">#</a> Objects</h3><p>There are three objects the api excepts those are <code>Property</code>, <code>Bid</code> and
-<code>LocalDataTime</code>.</p><p>A <code>LocalDataTime</code> is from the java library and is in the form
-<code>2007-12-03T10:15:30</code>.</p><p>A <code>Bid</code> Class. The bid class is an object used to bid on a property and store
-who has the highest bid and what amount that is. A bid can be seen in the form</p><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>offer</td><td>Int</td><td>A integer of euro amount of the bid</td></tr><tr><td>bidder</td><td>String</td><td>A String used to identify who the bidder is</td></tr></tbody></table><p>A <code>Property</code> Class. This class is an object used to store a Property in the
-database. A property can be seen in the form</p><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>id</td><td>int</td><td>Unique id of property</td></tr><tr><td>type</td><td>string</td><td>What type of property is it. <code>apartment</code> or <code>house</code></td></tr><tr><td>bedrooms</td><td>int</td><td>Number of bedrooms in the property</td></tr><tr><td>district</td><td>int</td><td>The postcode representing where in Dublin they are located e.g. 12 represents D12</td></tr><tr><td>start</td><td>LocalDataTime</td><td>The date and time the property is created</td></tr><tr><td>end</td><td>LocalDataTime</td><td>The date that the auction closes on</td></tr><tr><td>price</td><td>int</td><td>The asking price for the property in euro</td></tr></tbody></table><h2 id="route"><a href="#route" aria-hidden="true" class="header-anchor">#</a> Route</h2><p>API routes for rest calls are as follows</p><table><thead><tr><th>URI path</th><th>HTTP method</th><th>Description</th></tr></thead><tbody><tr><td>/api/property</td><td>GET</td><td>returns an array of <code>Property</code> in <code>application/json</code></td></tr><tr><td>/api/property</td><td>POST</td><td>create new <code>Property</code> with <code>Property</code> object sent returns the id of the new <code>Property</code></td></tr><tr><td>/api/property/{id}</td><td>GET</td><td>returns <code>Property</code> with given id in <code>application/json</code></td></tr><tr><td>/api/property/{id}</td><td>PUT</td><td>updates <code>Property</code> with given id to match <code>Property</code> object sent</td></tr><tr><td>/api/property/{id}</td><td>DELETE</td><td>delete <code>Property</code> with given id</td></tr><tr><td>/api/property/{id}/bid</td><td>GET</td><td>returns <code>Bid</code> for <code>Property</code> with given id in <code>application/json</code></td></tr><tr><td>/api/property/{id}/bid</td><td>POST</td><td>excepts <code>Bid</code> for <code>Property</code> with given id returns http 409 with error message if bid is too low to be excepted &amp; 201 if the id is excepted</td></tr><tr><td>/api/property/{id}/booking</td><td>GET</td><td>returns an Array of unbooked times in the form of <code>2007-12-03T10:15:30</code> for <code>Property</code> with given id in <code>application/json</code></td></tr><tr><td>/api/property/{id}/booking</td><td>POST</td><td>excepts times in the form of <code>2007-12-03T10:15:30</code> for <code>Property</code> with given id returns 201 if booking is excepted an 409 with error message as reason if booking fails</td></tr></tbody></table></div><!----><div class="content page-nav"><p class="inner"><!----><span class="next"><a href="/" class="router-link-active">
-          EstateAgent
-        </a> →
-      </span></p></div></div></div></div>
+    <div id="app" data-server-rendered="true">
+      <div class="theme-container no-navbar no-sidebar">
+        <div class="sidebar">
+          <ul class="sidebar-links">
+            <li>
+              <a href="/" class="active sidebar-link">Design Document</a>
+              <ul class="sidebar-sub-headers">
+                <li class="sidebar-sub-header">
+                  <a href="#system-requirements" class="sidebar-link">System Requirements</a>
+                </li>
+                <li class="sidebar-sub-header">
+                  <a href="#installation" class="sidebar-link">Installation</a>
+                </li>
+                <li class="sidebar-sub-header">
+                  <a href="#structure" class="sidebar-link">Structure</a>
+                </li>
+                <li class="sidebar-sub-header">
+                  <a href="#route" class="sidebar-link">Route</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/" class="sidebar-link">EstateAgent</a>
+            </li>
+          </ul>
+        </div>
+        <div class="page">
+          <div class="content">
+            <h1 id="design-document">
+              <a href="#design-document" aria-hidden="true" class="header-anchor">#</a> Design Document
+            </h1>
+            <h2 id="system-requirements">
+              <a href="#system-requirements" aria-hidden="true" class="header-anchor">#</a> System Requirements
+            </h2>
+            <ul>
+              <li>Tomcat8</li>
+              <li>Maven</li>
+            </ul>
+            <h2 id="installation">
+              <a href="#installation" aria-hidden="true" class="header-anchor">#</a> Installation
+            </h2>
+            <pre class="language-text">
+              <code> mvn clean package </code>
+            </pre>
+            <p>Copy the outputted <code>./target/EstateAgent.war</code> file into the <code>webapps</code> directory in your tomcat installation.</p>
+            <p>Restart tomcat</p>
+            <h2 id="structure"><a href="#structure" aria-hidden="true" class="header-anchor">#</a> Structure</h2>
+            <h3 id="objects"><a href="#objects" aria-hidden="true" class="header-anchor">#</a> Objects</h3>
+            <p>There are three objects the api excepts those are <code>Property</code>, <code>Bid</code> and <code>LocalDataTime</code>.</p>
+            <p>A <code>LocalDataTime</code> is from the java library and is in the form <code>2007-12-03T10:15:30</code>.</p>
+            <p>A <code>Bid</code> Class. The bid class is an object used to bid on a property and store who has the highest bid and what amount that is. A bid can be seen in the form</p>
+            <table>
+              <thead>
+                <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>offer</td><td>Int</td><td>A integer of euro amount of the bid</td></tr>
+                <tr><td>bidder</td><td>String</td><td>A String used to identify who the bidder is</td></tr>
+              </tbody>
+            </table>
+            <p>A <code>Property</code> Class. This class is an object used to store a Property in the database. A property can be seen in the form</p>
+            <table>
+              <thead>
+                <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>int</td><td>Unique id of property</td></tr>
+                <tr><td>type</td><td>string</td><td>What type of property is it. <code>apartment</code> or <code>house</code></td></tr>
+                <tr><td>bedrooms</td><td>int</td><td>Number of bedrooms in the property</td></tr>
+                <tr><td>district</td><td>int</td><td>The postcode representing where in Dublin they are located e.g. 12 represents D12</td></tr>
+                <tr><td>start</td><td>LocalDataTime</td><td>The date and time the property is created</td></tr>
+                <tr><td>end</td><td>LocalDataTime</td><td>The date that the auction closes on</td></tr>
+                <tr><td>price</td><td>int</td><td>The asking price for the property in euro</td></tr>
+              </tbody>
+            </table>
+            <h2 id="route"><a href="#route" aria-hidden="true" class="header-anchor">#</a> Route</h2>
+            <p>API routes for rest calls are as follows</p>
+            <table>
+              <thead>
+                <tr><th>URI path</th><th>HTTP method</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>/api/property</td><td>GET</td><td>returns an array of <code>Property</code> in <code>application/json</code></td></tr>
+                <tr><td>/api/property</td><td>POST</td><td>create new <code>Property</code> with <code>Property</code> object sent returns the id of the new <code>Property</code></td></tr>
+                <tr><td>/api/property/{id}</td><td>GET</td><td>returns <code>Property</code> with given id in <code>application/json</code></td></tr>
+                <tr><td>/api/property/{id}</td><td>PUT</td><td>updates <code>Property</code> with given id to match <code>Property</code> object sent</td></tr>
+                <tr><td>/api/property/{id}</td><td>DELETE</td><td>delete <code>Property</code> with given id</td></tr>
+                <tr><td>/api/property/{id}/bid</td><td>GET</td><td>returns <code>Bid</code> for <code>Property</code> with given id in <code>application/json</code></td></tr>
+                <tr><td>/api/property/{id}/bid</td><td>POST</td><td>excepts <code>Bid</code> for <code>Property</code> with given id returns http 409 with error message if bid is too low to be excepted &amp; 201 if the id is excepted</td></tr>
+                <tr><td>/api/property/{id}/booking</td><td>GET</td><td>returns an Array of unbooked times in the form of <code>2007-12-03T10:15:30</code> for <code>Property</code> with given id in <code>application/json</code></td></tr>
+                <tr><td>/api/property/{id}/booking</td><td>POST</td><td>excepts times in the form of <code>2007-12-03T10:15:30</code> for <code>Property</code> with given id returns 201 if booking is excepted an 409 with error message as reason if booking fails</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="content page-nav">
+            <p class="inner">
+              <span class="next"><a href="/" class="router-link-active"> EstateAgent </a> → </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="/assets/js/1.cfdbb645.js" defer></script><script src="/assets/js/app.fe9d7d4e.js" defer></script>
   </body>
 </html>
