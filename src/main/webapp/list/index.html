@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Properties</title>
+    <link rel="preload" href="/assets/css/2.styles.d18b8fad.css" as="style">
+    <link rel="preload" href="/assets/js/app.fe9d7d4e.js" as="script">
+    <link rel="preload" href="/assets/js/1.cfdbb645.js" as="script">
+    <link rel="prefetch" href="/assets/js/0.08bd8f40.js">
+    <link rel="stylesheet" href="/assets/css/2.styles.d18b8fad.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true">
+      <div class="theme-container">
+        <div class="sidebar">
+          <ul class="sidebar-links">
+            <li>
+              <a href="/" class="sidebar-link">Design Document</a>
+            </li>
+            </li>
+              <a href="/list" class="active sidebar-link">Property List</a>
+            </li>
+            <li>
+              <a href="/property" class="sidebar-link">Property Search</a>
+            </li>
+          </ul>
+        </div>
+        <div class="page">
+          <div class="content">
+            <h1 id="design-document">Properties</h1>
+            <input id="min" type="number">
+            <input id="max" type="number">
+            <button id=submit>filter</button>
+            <div id="properties"></div>
+          </div>
+          <div class="content page-nav">
+            <p class="inner">
+              <span class="next"><a href="/bid" class="router-link-active"> bid </a> → </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/assets/js/1.cfdbb645.js" defer></script>
+    <script src="/assets/js/app.fe9d7d4e.js" defer></script>
+    <script>
+function output(data) {
+  const msg = `<table><thead>
+    <tr><th>ID</th><th>Type</th><th>Bedrooms</th><th>district</th><th>start</th><th>end</th><th>price</th><th>current offer</th></tr>
+    </thead><tbody>${data.map(
+    ({ bedrooms, bid, district, end, id, price, start, type }) =>
+      `<tr><td><a href="/property#${id}">${id}</a></td><td>${type}</td><td>${bedrooms}</td><td>${district}</td><td>${start}</td><td>${end}</td><td>${price}</td><td>${
+        bid.offer
+      }</td></tr>`,
+  ).toString('')}</tbody></table>`;
+  console.log(msg);
+  document.getElementById('properties').innerHTML = msg;
+}
+function update(min, max) {
+  axios.get('/api/property', {
+    params: {
+      min,
+      max,
+    }
+  })
+  .then(({data}) => {
+    output(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}
+document.getElementById('submit').addEventListener('click', () => {
+  update(document.getElementById('min').value, document.getElementById('max').value);
+}, false);
+update();
+    </script>
+  </body>
+</html>

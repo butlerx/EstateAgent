@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<!--suppress SpellCheckingInspection -->
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Design Document</title>
-    <link rel="preload" href="/assets/css/2.styles.d18b8fad.css" as="style"><link rel="preload" href="/assets/js/app.fe9d7d4e.js" as="script"><link rel="preload" href="/assets/js/1.cfdbb645.js" as="script"><link rel="prefetch" href="/assets/js/0.08bd8f40.js">
+    <link rel="preload" href="/assets/css/2.styles.d18b8fad.css" as="style">
+    <link rel="preload" href="/assets/js/app.fe9d7d4e.js" as="script">
+    <link rel="preload" href="/assets/js/1.cfdbb645.js" as="script">
+    <link rel="prefetch" href="/assets/js/0.08bd8f40.js">
     <link rel="stylesheet" href="/assets/css/2.styles.d18b8fad.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true">
-      <div class="theme-container no-navbar no-sidebar">
+      <div class="theme-container">
         <div class="sidebar">
           <ul class="sidebar-links">
             <li>
@@ -31,7 +33,10 @@
               </ul>
             </li>
             <li>
-              <a href="/" class="sidebar-link">EstateAgent</a>
+              <a href="/list" class="sidebar-link">Property List</a>
+            </li>
+            <li>
+              <a href="/property" class="sidebar-link">Property Search</a>
             </li>
           </ul>
         </div>
@@ -50,9 +55,7 @@
             <h2 id="installation">
               <a href="#installation" aria-hidden="true" class="header-anchor">#</a> Installation
             </h2>
-            <pre class="language-text">
-              <code> mvn clean package </code>
-            </pre>
+            <pre class="language-text"><code> mvn clean package </code></pre>
             <p>Copy the outputted <code>./target/EstateAgent.war</code> file into the <code>webapps</code> directory in your tomcat installation.</p>
             <p>Restart tomcat</p>
             <h2 id="structure"><a href="#structure" aria-hidden="true" class="header-anchor">#</a> Structure</h2>
@@ -105,12 +108,13 @@
           </div>
           <div class="content page-nav">
             <p class="inner">
-              <span class="next"><a href="/" class="router-link-active"> EstateAgent </a> → </span>
+            <span class="next"><a href="/list/" class="router-link-active"> properties </a> → </span>
             </p>
           </div>
         </div>
       </div>
     </div>
-    <script src="/assets/js/1.cfdbb645.js" defer></script><script src="/assets/js/app.fe9d7d4e.js" defer></script>
+    <script src="/assets/js/1.cfdbb645.js" defer></script>
+    <script src="/assets/js/app.fe9d7d4e.js" defer></script>
   </body>
 </html>
