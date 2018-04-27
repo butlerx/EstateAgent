@@ -1,8 +1,8 @@
 package com.dcu;
 
 public class Bid {
-  final String bidder;
-  final int offer;
+  String bidder;
+  int offer;
 
   public Bid() {
     this("unknown", 0);
@@ -19,5 +19,13 @@ public class Bid {
 
   public String getBidder() {
     return this.bidder;
+  }
+
+  public void setOffer(int offer) {
+    this.offer = offer;
+  }
+
+  public void setBidder(String bidder) {
+    this.bidder = bidder;
   }
 }

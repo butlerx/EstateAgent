@@ -1,5 +1,7 @@
 package com.dcu.client;
 
+import static java.lang.String.*;
+
 import com.dcu.AlreadyBooked;
 import com.dcu.Bid;
 import com.dcu.BidTooLow;
@@ -18,7 +20,7 @@ class App {
     String name = scanner.nextLine();
     while (true) {
       System.out.println(
-          String.join(
+          join(
               "\n",
               "Choose a Command: ",
               "(1) List all Property",
@@ -58,18 +60,19 @@ class App {
           boolean offerMade = false;
           while (!offerMade) {
             final Property prop = props.getProperty(propID);
-            System.out.println(
-                "The Property has an asking price of "
-                    + prop.getPrice()
-                    + "\nThe Highest bid is "
-                    + prop.getBid().getOffer());
+            System.out.printf(
+                "The Property has an asking price of %d\nThe Highest bid is %d%n",
+                prop.getPrice(), prop.getBid().getOffer());
             int offer = scanner.nextInt();
             while (offer <= prop.getBid().getOffer()) {
               System.out.print("Offer not high enough: ");
               offer = scanner.nextInt();
             }
             try {
-              props.placeBid(propID, new Bid(name, offer));
+              Bid bid = new Bid();
+              bid.setOffer(offer);
+              bid.setBidder(name);
+              props.placeBid(propID, bid);
               offerMade = true;
             } catch (BidTooLow e) {
               System.out.print("Offer not high enough: ");
@@ -88,7 +91,7 @@ class App {
           // This actually results in a lot of api calls but java lambda needs the use of finals
           while (!bookingMade) {
             List<LocalDateTime> freeViewings = props.getBooking(propID);
-            System.out.println("Available Viewing :\n" + freeViewings);
+            System.out.printf("Available Viewing :\n%s%n", freeViewings);
             final LocalDateTime slot =
                 LocalDateTime.parse(scanner.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             if (freeViewings.stream().noneMatch(viewing -> viewing == slot)) {
@@ -107,8 +110,7 @@ class App {
           System.out.println("Booking made");
           break;
         case 7:
-          System.out.print(
-              String.join("\n", "Choose a property type: ", "(1) house", "(2) apartment"));
+          System.out.print(join("\n", "Choose a property type: ", "(1) house", "(2) apartment"));
           final int typeArg = scanner.nextInt();
           String type;
           if (typeArg == 1) {

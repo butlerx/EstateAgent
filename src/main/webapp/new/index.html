@@ -26,21 +26,45 @@
               <a href="/property" class="active sidebar-link">Property Search</a>
             </li>
             <li>
-              <a href="/new" class="sidebar-link">New Property</a>
+              <a href="/new" class="active sidebar-link">New Property</a>
             </li>
           </ul>
         </div>
         <div class="page">
           <div class="content">
-            <h1 id="design-document">Property</h1>
-            <input id="search" type="number">
-            <button id=submit>search</button>
-            <div id="property"></div>
-            <div id="schedule"></div>
+            <h1 id="design-document">New Property</h1>
+            <form action="/api/property" method="post">
+              <div>
+                <label for="type">Property Type</label>
+                <select name="type">
+                  <option value="apartment">Apartment</option>
+                  <option value="house" selected>House</option>
+                </select>
+              </div>
+              <div>
+                <label for="district">Property Post Code</label>
+                <input type="number" name="district" min="1" max="24">
+              </div>
+              <div>
+                <label for="bedrooms">Number of bedrooms</label>
+                <input type="number" name="bedrooms" min="1" max="100">
+              </div>
+              <div>
+                <label for="price">Price of Property</label>
+                <input type="number" name="price" min="1" max="1000000000000000">
+              </div>
+              <div>
+                <label for="daysLeft">Days to offer Property</label>
+                <input type="number" name="daysLeft" min="1" max="30">
+              </div>
+              <div>
+                <button>Create</button>
+              </div>
+            </form>
           </div>
           <div class="content page-nav">
             <p class="inner">
-              <span class="next"><a href="/new" class="router-link-active"> New </a> → </span>
+              <span class="next"><a href="/" class="router-link-active"> home </a> → </span>
             </p>
           </div>
         </div>

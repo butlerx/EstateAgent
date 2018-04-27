@@ -62,3 +62,18 @@ API routes for rest calls are as follows
 | /api/property/{id}/bid     | POST        | excepts `Bid` for `Property` with given id returns http 409 with error message if bid is too low to be excepted & 201 if the id is excepted                             |
 | /api/property/{id}/booking | GET         | returns an Array of unbooked times in the form of `2007-12-03T10:15:30` for `Property` with given id in `application/json`                                              |
 | /api/property/{id}/booking | POST        | excepts times in the form of `2007-12-03T10:15:30` for `Property` with given id returns 201 if booking is excepted an 409 with error message as reason if booking fails |
+
+## Client
+
+There are 2 clients for the api, a web based client and a command line client
+
+The Command line client can be run by
+`mvn exec:java -D"exec.mainClass"="com.dcu.client.App"` while the web client is
+served with the api by as part of the War.
+
+We Added a web client so as to make testing the api as simple as possible and
+require no compilation or dependencies.
+
+Both clients Consume the same api. They also handle all errors from the api,
+such as a booking slot being taken or a bid being too low and prompting the user
+to submit a new request. All other logic is handled by the rest api.

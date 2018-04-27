@@ -14,6 +14,9 @@ docker-compose up --build
 
 You can access the server on `localhost:8080`
 
+To run the cli run
+`docker run --rm -it mvn exec:java -D"exec.mainClass"="com.dcu.client.App"`
+
 ### Build
 
 To produce WAR file run

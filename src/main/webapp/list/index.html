@@ -25,6 +25,9 @@
             <li>
               <a href="/property" class="sidebar-link">Property Search</a>
             </li>
+            <li>
+              <a href="/new" class="sidebar-link">New Property</a>
+            </li>
           </ul>
         </div>
         <div class="page">
@@ -37,7 +40,7 @@
           </div>
           <div class="content page-nav">
             <p class="inner">
-              <span class="next"><a href="/bid" class="router-link-active"> bid </a> → </span>
+            <span class="next"><a href="/property" class="router-link-active"> Search </a> → </span>
             </p>
           </div>
         </div>
@@ -47,16 +50,14 @@
     <script src="/assets/js/app.fe9d7d4e.js" defer></script>
     <script>
 function output(data) {
-  const msg = `<table><thead>
+  document.getElementById('properties').innerHTML = `<table><thead>
     <tr><th>ID</th><th>Type</th><th>Bedrooms</th><th>district</th><th>start</th><th>end</th><th>price</th><th>current offer</th></tr>
     </thead><tbody>${data.map(
     ({ bedrooms, bid, district, end, id, price, start, type }) =>
       `<tr><td><a href="/property#${id}">${id}</a></td><td>${type}</td><td>${bedrooms}</td><td>${district}</td><td>${start}</td><td>${end}</td><td>${price}</td><td>${
         bid.offer
       }</td></tr>`,
-  ).toString('')}</tbody></table>`;
-  console.log(msg);
-  document.getElementById('properties').innerHTML = msg;
+  ).join('')}</tbody></table>`;
 }
 function update(min, max) {
   axios.get('/api/property', {

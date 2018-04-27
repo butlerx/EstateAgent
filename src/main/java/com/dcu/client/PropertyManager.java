@@ -14,15 +14,14 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 
 class PropertyManager {
   private static final String REST_URI = "http://localhost:8080/api/property";
-  private static final Client client = ClientBuilder.newBuilder()
-    .register(JacksonFeature.class)
-    .build();
+  private static final Client client =
+      ClientBuilder.newBuilder().register(JacksonFeature.class).build();
 
   public void createProperty(Property prop) {
     client
-      .target(REST_URI)
-      .request(MediaType.APPLICATION_JSON)
-      .post(Entity.entity(prop, MediaType.APPLICATION_JSON));
+        .target(REST_URI)
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(prop, MediaType.APPLICATION_JSON));
   }
 
   public Property getProperty(int id) {
@@ -53,11 +52,11 @@ class PropertyManager {
 
   public void placeBid(int id, Bid bid) {
     client
-      .target(REST_URI)
-      .path(String.valueOf(id))
-      .path("bid")
-      .request(MediaType.APPLICATION_JSON)
-      .post(Entity.entity(bid, MediaType.APPLICATION_JSON));
+        .target(REST_URI)
+        .path(String.valueOf(id))
+        .path("bid")
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(bid, MediaType.APPLICATION_JSON));
   }
 
   public List<LocalDateTime> getBooking(int id) {
@@ -71,10 +70,10 @@ class PropertyManager {
 
   public void makeBooking(int id, Booking booking) {
     client
-      .target(REST_URI)
-      .path(String.valueOf(id))
-      .path("booking")
-      .request(MediaType.APPLICATION_JSON)
-      .post(Entity.entity(booking, MediaType.APPLICATION_JSON));
+        .target(REST_URI)
+        .path(String.valueOf(id))
+        .path("booking")
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(booking, MediaType.APPLICATION_JSON));
   }
 }

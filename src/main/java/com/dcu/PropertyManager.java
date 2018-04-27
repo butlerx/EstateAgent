@@ -36,7 +36,7 @@ public class PropertyManager {
   public List<Property> getAll(
       @DefaultValue("0") @QueryParam("min") final int min,
       @DefaultValue("2147483647") @QueryParam("max") final int max) {
-    LOGGER.fine("Get All(min: " + min + ", max: " + max + ")");
+    LOGGER.fine(String.format("Get All(min: %d, max: %d)", min, max));
     return properties
         .getAll()
         .stream()
@@ -85,12 +85,12 @@ public class PropertyManager {
 
   @POST
   @Path("/{id}/bid")
-  @Produces(value = {APPLICATION_JSON})
-  public Response bid(
-      final Bid bid, @PathParam("id") final int id, @Context final UriInfo uriInfo) {
+  @Produces({APPLICATION_JSON})
+  public Response bid(@PathParam("id") final int id, final Bid bid) {
+    System.out.println(bid.offer + " " + bid.bidder);
     properties.get(id).bid(bid.offer, bid.bidder);
     return Response.status(Response.Status.CREATED.getStatusCode())
-        .entity("Bid of " + bid.offer + " on property " + id + " accepted")
+        .entity(String.format("Bid of %d on property %d accepted", bid.offer, id))
         .build();
   }
 
@@ -104,11 +104,10 @@ public class PropertyManager {
   @POST
   @Path("/{id}/booking")
   @Produces(value = {APPLICATION_JSON})
-  public Response book(
-      final Booking booking, @PathParam("id") final int id, @Context final UriInfo uriInfo) {
+  public Response book(final Booking booking, @PathParam("id") final int id) {
     properties.get(id).book(booking.time, booking.getBooker());
     return Response.status(Response.Status.CREATED.getStatusCode())
-        .entity("Booking for " + booking.time + " on property " + id + " accepted")
+        .entity(String.format("Booking for %s on property %d accepted", booking.time, id))
         .build();
   }
 }
