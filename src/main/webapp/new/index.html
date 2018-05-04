@@ -33,7 +33,7 @@
         <div class="page">
           <div class="content">
             <h1 id="design-document">New Property</h1>
-            <form action="/api/property" method="post">
+            <form id="create" action="/api/property" method="post">
               <div>
                 <label for="type">Property Type</label>
                 <select name="type">
@@ -58,7 +58,7 @@
                 <input type="number" name="daysLeft" min="1" max="30">
               </div>
               <div>
-                <button>Create</button>
+                <button type="submit">Create</button>
               </div>
             </form>
           </div>
@@ -72,5 +72,6 @@
     </div>
     <script src="/assets/js/1.cfdbb645.js" defer></script>
     <script src="/assets/js/app.fe9d7d4e.js" defer></script>
+    <script src="./index.js"></script>
   </body>
 </html>

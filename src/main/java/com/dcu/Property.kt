@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 
 class Property @JvmOverloads constructor(
-  var type: String? = "house",
+  var type: String = "house",
   var district: Int = 0,
   var bedrooms: Int = 0,
   var price: Int = 0,
@@ -41,7 +41,7 @@ class Property @JvmOverloads constructor(
         while (date.isBefore(this.end)) {
             var time = LocalTime.of(8, 0)
             while (time.isBefore(LocalTime.of(18, 0))) {
-                viewings.add(Booking(LocalDateTime.of(date, time)))
+                viewings.add(Booking(LocalDateTime.of(date, time).toString()))
                 time = time.plusMinutes(30)
             }
             date = date.plusDays(1)
@@ -51,11 +51,12 @@ class Property @JvmOverloads constructor(
 
     @Throws(BidTooLow::class)
     fun bid(offer: Int, bidder: String) {
-        System.out.printf("%s %s %d %d%n", offer < price, offer < this.bid.offer, offer, price)
         if (offer < price || offer < this.bid.offer) throw BidTooLow()
         this.bid.offer = offer
         this.bid.bidder = bidder
     }
 
-    fun book(time: LocalDateTime, booker: String) = Arrays.stream(this.viewings).filter { x -> time == x.time }.findFirst().get().book(booker)
+    fun book(time: String, booker: String) = Arrays.stream(this.viewings).filter {
+      x -> time == x.time
+    }.findFirst().get().book(booker)
 }

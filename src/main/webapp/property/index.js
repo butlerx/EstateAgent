@@ -24,7 +24,7 @@ function output({ bedrooms, bid, district, end, id, price, start, type, freeView
     <div>${freeViewings
       .map(
         time => `<div>
-          <input type="radio" name="booking" value="${time} id="radio">
+          <input type="radio" name="booking" value="${time}" id="radio">
           <label for="radio">${time}</label>
         </div>`,
       )

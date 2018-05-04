@@ -2,5 +2,6 @@ version: '3'
 services:
   tomcat:
     build: .
+    image: butlerx/estateagent
     ports:
       - "8080:8080"

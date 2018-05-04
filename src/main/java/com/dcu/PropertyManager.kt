@@ -1,7 +1,6 @@
 package com.dcu
 
 import org.springframework.beans.factory.annotation.Autowired
-import java.time.LocalDateTime
 import java.util.logging.Logger
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
@@ -13,7 +12,7 @@ import kotlin.streams.toList
 @Path("property")
 class PropertyManager {
     @Autowired
-    private val properties: PropertyDB? = null
+    private var properties: PropertyDB? = null
 
     init {
         LOGGER.fine("PropertyManager()")
@@ -36,9 +35,8 @@ class PropertyManager {
     @POST
     @Consumes(value = [APPLICATION_JSON])
     fun add(prop: Property, @Context uriInfo: UriInfo): Response {
-        val id = properties!!.add(prop)
         return Response.status(Response.Status.CREATED.statusCode)
-                .header("Location", String.format("%s/%s", uriInfo.absolutePath.toString(), id))
+                .header("Location", String.format("%s/%s", uriInfo.absolutePath.toString(), properties!!.add(prop)))
                 .build()
     }
 
@@ -60,7 +58,7 @@ class PropertyManager {
     @DELETE
     @Path("/{id}")
     @Consumes(value = [APPLICATION_JSON])
-    fun delete(prop: Property, @PathParam("id") id: Int): Response {
+    fun delete(@PathParam("id") id: Int): Response {
         properties!!.delete(id)
         return Response.status(Response.Status.OK.statusCode).build()
     }
@@ -76,7 +74,6 @@ class PropertyManager {
     @Path("/{id}/bid")
     @Produces(APPLICATION_JSON)
     fun bid(@PathParam("id") id: Int, bid: Bid): Response {
-        println(bid.offer.toString() + " " + bid.bidder)
         properties!![id].bid(bid.offer, bid.bidder)
         return Response.status(Response.Status.CREATED.statusCode)
                 .entity(String.format("Bid of %d on property %d accepted", bid.offer, id))
@@ -86,7 +83,7 @@ class PropertyManager {
     @GET
     @Path("/{id}/booking")
     @Produces(value = [APPLICATION_JSON])
-    fun getBooking(@PathParam("id") id: Int): Array<LocalDateTime> {
+    fun getBooking(@PathParam("id") id: Int): Array<*> {
         return properties!![id].freeViewings
     }
 
@@ -94,6 +91,7 @@ class PropertyManager {
     @Path("/{id}/booking")
     @Produces(value = [APPLICATION_JSON])
     fun book(booking: Booking, @PathParam("id") id: Int): Response {
+        LOGGER.fine(String.format("booking: %s, time: %s)", booking.booker, booking.time))
         properties!![id].book(booking.time, booking.booker)
         return Response.status(Response.Status.CREATED.statusCode)
                 .entity(String.format("Booking for %s on property %d accepted", booking.time, id))

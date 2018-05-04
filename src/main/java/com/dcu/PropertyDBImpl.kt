@@ -48,6 +48,6 @@ class PropertyDBImpl : PropertyDB {
                         prop.price,
                         prop.dayLeft,
                         properties.size))
-        return properties.size
+        return properties.size - 1
     }
 }
